@@ -567,7 +567,7 @@ uvc_error_t uvc_wrap(
     uvc_context_t *context,
     uvc_device_handle_t **devh);
 
-uvc_error_r uvc_wrap_with_driver_mode(
+uvc_error_t uvc_wrap_with_driver_mode(
     int sys_dev,
     uvc_context_t *context,
     uvc_device_handle_t **devh,

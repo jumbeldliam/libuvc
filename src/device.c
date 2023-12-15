@@ -1077,7 +1077,7 @@ uvc_error_t uvc_release_if(uvc_device_handle_t *devh, int idx) {
     if(devh->detatched & (1 << idx)) {
       /* Reattach any kernel drivers that were disabled when we claimed this interface */
       ret = libusb_attach_kernel_driver(devh->usb_devh, idx);
-      devh->detatched & ~(1 << idx);
+      devh->detatched &= ~(1 << idx);
 
       if (ret == UVC_SUCCESS) {
         UVC_DEBUG("reattached kernel driver to interface %d", idx);
