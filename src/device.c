@@ -281,26 +281,6 @@ static uvc_error_t uvc_open_internal(
  * @param sys_dev the platform-specific system device handle
  * @param context UVC context to prepare the device
  * @param[out] devh Handle on opened device
- * @return Error opening device or SUCCESS
- */
-uvc_error_t uvc_wrap(
-    int sys_dev,
-    uvc_context_t *context,
-    uvc_device_handle_t **devh) {
-  return uvc_wrap_with_driver_mode(sys_dev, context, devh, UVC_KERNEL_DRIVER_MODE_DETATCH_ON);
-}
-
-/** @brief Wrap a platform-specific system device handle and obtain a UVC device handle.
- * The handle allows you to use libusb to perform I/O on the device in question.
- *
- * On Linux, the system device handle must be a valid file descriptor opened on the device node.
- *
- * The system device handle must remain open until uvc_close() is called. The system device handle will not be closed by uvc_close().
- * @ingroup device
- *
- * @param sys_dev the platform-specific system device handle
- * @param context UVC context to prepare the device
- * @param[out] devh Handle on opened device
  * @param[in] kernel_driver_mode whether or not the kernel driver should be detatched on claiming an interface
  * @return Error opening device or SUCCESS
  */
@@ -329,6 +309,26 @@ uvc_error_t uvc_wrap_with_driver_mode(
   ret = uvc_open_internal(dev, usb_devh, devh, kernel_driver_mode);
   UVC_EXIT(ret);
   return ret;
+}
+
+/** @brief Wrap a platform-specific system device handle and obtain a UVC device handle.
+ * The handle allows you to use libusb to perform I/O on the device in question.
+ *
+ * On Linux, the system device handle must be a valid file descriptor opened on the device node.
+ *
+ * The system device handle must remain open until uvc_close() is called. The system device handle will not be closed by uvc_close().
+ * @ingroup device
+ *
+ * @param sys_dev the platform-specific system device handle
+ * @param context UVC context to prepare the device
+ * @param[out] devh Handle on opened device
+ * @return Error opening device or SUCCESS
+ */
+uvc_error_t uvc_wrap(
+    int sys_dev,
+    uvc_context_t *context,
+    uvc_device_handle_t **devh) {
+  return uvc_wrap_with_driver_mode(sys_dev, context, devh, UVC_KERNEL_DRIVER_MODE_DETATCH_ON);
 }
 #endif
 
@@ -379,7 +379,7 @@ static uvc_error_t uvc_open_internal(
     uvc_device_t *dev,
     struct libusb_device_handle *usb_devh,
     uvc_device_handle_t **devh,
-    enum uvc_kernel_driver_mode driver_mode) {
+    enum uvc_kernel_driver_mode kernel_driver_mode) {
   uvc_error_t ret;
   uvc_device_handle_t *internal_devh;
   struct libusb_device_descriptor desc;
