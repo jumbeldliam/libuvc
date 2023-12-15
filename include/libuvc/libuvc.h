@@ -532,7 +532,7 @@ typedef struct uvc_still_ctrl {
 enum uvc_kernel_driver_mode {
   UVC_KERNEL_DRIVER_MODE_DETATCH_OFF = 0,
   UVC_KERNEL_DRIVER_MODE_DETATCH_ON = 1,
-}
+};
 
 uvc_error_t uvc_init(uvc_context_t **ctx, struct libusb_context *usb_ctx);
 void uvc_exit(uvc_context_t *ctx);
